@@ -1,0 +1,11 @@
+{
+  "name": "english-companion",
+  "version": "0.2.0",
+  "private": true,
+  "description": "A Claude Code mod that helps you write your prompts in English.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --experimental-strip-types --no-warnings --test test/*.test.mts && python3 -m unittest discover -s test",
+    "validate": "claude plugin validate ."
+  }
+}

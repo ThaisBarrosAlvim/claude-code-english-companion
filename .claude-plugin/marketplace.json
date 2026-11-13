@@ -1,0 +1,12 @@
+{
+  "name": "english-companion",
+  "owner": { "name": "english-companion contributors" },
+  "description": "A Claude Code mod that helps you write your prompts in English, or any language you choose.",
+  "plugins": [
+    {
+      "name": "english-companion",
+      "description": "A warning when your draft is in another language, and a short review of your writing after you send.",
+      "source": "./"
+    }
+  ]
+}

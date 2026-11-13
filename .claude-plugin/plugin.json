@@ -1,0 +1,50 @@
+{
+  "name": "english-companion",
+  "version": "0.3.0",
+  "description": "Helps you write your prompts in English, or any language you choose: a live warning when a draft is in another language, and a short Haiku review of your writing after you send.",
+  "author": { "name": "english-companion contributors" },
+  "license": "MIT",
+  "repository": "https://github.com/ThaisBarrosAlvim/claude-code-english-companion",
+  "homepage": "https://github.com/ThaisBarrosAlvim/claude-code-english-companion",
+  "keywords": ["language", "english", "prompt", "writing", "grammar", "language-learning", "language-detection"],
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "targetLanguage": {
+      "type": "string",
+      "title": "Language you want to write in",
+      "description": "The language your prompts should be in. A draft in any other language gets the warning, and the review checks your writing in this one. Use its English name (English, Spanish, French...) or its language code.",
+      "default": "English"
+    },
+    "nativeLanguage": {
+      "type": "string",
+      "title": "Your first language (optional)",
+      "description": "Helps the review understand mistakes that come from your first language, such as words that look like words of it (false friends). Use the language's English name. Left empty, the review works it out from the mistakes.",
+      "default": ""
+    },
+    "reviewEnabled": {
+      "type": "boolean",
+      "title": "Review with Haiku after sending",
+      "description": "Turn the short Haiku review of your writing on or off. It costs one extra Haiku call per reviewed prompt, on your account. The language warning while you type is not affected.",
+      "default": true
+    },
+    "sensitivity": {
+      "type": "string",
+      "title": "Review sensitivity",
+      "description": "How much the review reports. low: only clear mistakes, no improvements. normal: mistakes and a few improvements. high: thorough, up to three of each, even slight rewordings.",
+      "options": ["low", "normal", "high"],
+      "default": "normal"
+    },
+    "ignorePunctuation": {
+      "type": "boolean",
+      "title": "Ignore punctuation and accents",
+      "description": "Do not report missing or extra commas, periods, question marks, apostrophes, hyphens, quotes, spaces around punctuation, or accents.",
+      "default": false
+    },
+    "extraInstructions": {
+      "type": "string",
+      "title": "Extra instructions for the reviewer",
+      "description": "Your own rules, added to the reviewer's prompt. For example: Ignore missing commas. Do not flag informal contractions. Do not suggest more formal wording.",
+      "default": ""
+    }
+  }
+}

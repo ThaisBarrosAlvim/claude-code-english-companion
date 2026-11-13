@@ -1,0 +1,1603 @@
+{
+ "_about": "Answers of the official fastText library (fasttext-predict 0.9.2.4) for model/lid.176.ftz, top 3 labels per text. test_ftz.py checks the pure-Python predictor against them.",
+ "cases": [
+  {
+   "text": "eu acho que você deveria fazer isso agora",
+   "top": [
+    [
+     "__label__pt",
+     0.998414
+    ],
+    [
+     "__label__en",
+     0.001387
+    ],
+    [
+     "__label__br",
+     8.3e-05
+    ]
+   ]
+  },
+  {
+   "text": "roda o git status no repo e me diz o que mudou",
+   "top": [
+    [
+     "__label__sq",
+     0.209511
+    ],
+    [
+     "__label__tr",
+     0.118633
+    ],
+    [
+     "__label__ku",
+     0.073696
+    ]
+   ]
+  },
+  {
+   "text": "preciso que voce analise o erro do airflow",
+   "top": [
+    [
+     "__label__pt",
+     0.505585
+    ],
+    [
+     "__label__it",
+     0.391194
+    ],
+    [
+     "__label__ro",
+     0.032438
+    ]
+   ]
+  },
+  {
+   "text": "cria um modelo dbt para a tabela de clientes",
+   "top": [
+    [
+     "__label__pt",
+     0.820762
+    ],
+    [
+     "__label__es",
+     0.133844
+    ],
+    [
+     "__label__gl",
+     0.039132
+    ]
+   ]
+  },
+  {
+   "text": "não entendi porque o teste está falhando",
+   "top": [
+    [
+     "__label__pt",
+     0.997488
+    ],
+    [
+     "__label__en",
+     0.001241
+    ],
+    [
+     "__label__es",
+     0.000537
+    ]
+   ]
+  },
+  {
+   "text": "faz o commit com uma mensagem melhor",
+   "top": [
+    [
+     "__label__pt",
+     0.999645
+    ],
+    [
+     "__label__en",
+     0.000266
+    ],
+    [
+     "__label__it",
+     0.000136
+    ]
+   ]
+  },
+  {
+   "text": "quero que você leia o arquivo e explique como funciona",
+   "top": [
+    [
+     "__label__pt",
+     0.956607
+    ],
+    [
+     "__label__es",
+     0.033737
+    ],
+    [
+     "__label__gl",
+     0.005933
+    ]
+   ]
+  },
+  {
+   "text": "pode olhar esse erro no snowflake pra mim",
+   "top": [
+    [
+     "__label__pt",
+     0.930892
+    ],
+    [
+     "__label__vi",
+     0.033838
+    ],
+    [
+     "__label__mk",
+     0.005743
+    ]
+   ]
+  },
+  {
+   "text": "agora faz o mesmo para a pasta de staging",
+   "top": [
+    [
+     "__label__pt",
+     0.979547
+    ],
+    [
+     "__label__gl",
+     0.00734
+    ],
+    [
+     "__label__vi",
+     0.004729
+    ]
+   ]
+  },
+  {
+   "text": "isso não funcionou, tenta de novo com outro parametro",
+   "top": [
+    [
+     "__label__pt",
+     0.989612
+    ],
+    [
+     "__label__en",
+     0.008125
+    ],
+    [
+     "__label__it",
+     0.000419
+    ]
+   ]
+  },
+  {
+   "text": "como eu faço para rodar isso no docker compose",
+   "top": [
+    [
+     "__label__pt",
+     0.994442
+    ],
+    [
+     "__label__gl",
+     0.003031
+    ],
+    [
+     "__label__es",
+     0.001783
+    ]
+   ]
+  },
+  {
+   "text": "muda o nome da função e atualiza todos os usos",
+   "top": [
+    [
+     "__label__pt",
+     0.993579
+    ],
+    [
+     "__label__gl",
+     0.001978
+    ],
+    [
+     "__label__it",
+     0.001882
+    ]
+   ]
+  },
+  {
+   "text": "por favor verifica se o terraform plan está limpo",
+   "top": [
+    [
+     "__label__pt",
+     0.539637
+    ],
+    [
+     "__label__es",
+     0.431749
+    ],
+    [
+     "__label__gl",
+     0.023998
+    ]
+   ]
+  },
+  {
+   "text": "o pipeline quebrou depois do último deploy",
+   "top": [
+    [
+     "__label__pt",
+     0.986812
+    ],
+    [
+     "__label__en",
+     0.003812
+    ],
+    [
+     "__label__es",
+     0.003171
+    ]
+   ]
+  },
+  {
+   "text": "me mostra a diferença entre as duas branches",
+   "top": [
+    [
+     "__label__pt",
+     0.868784
+    ],
+    [
+     "__label__en",
+     0.098661
+    ],
+    [
+     "__label__gl",
+     0.005268
+    ]
+   ]
+  },
+  {
+   "text": "vamos continuar de onde paramos ontem",
+   "top": [
+    [
+     "__label__pt",
+     0.641853
+    ],
+    [
+     "__label__fi",
+     0.054995
+    ],
+    [
+     "__label__fy",
+     0.043175
+    ]
+   ]
+  },
+  {
+   "text": "não precisa explicar tudo, só me diz se funcionou",
+   "top": [
+    [
+     "__label__pt",
+     0.992639
+    ],
+    [
+     "__label__en",
+     0.001899
+    ],
+    [
+     "__label__br",
+     0.001299
+    ]
+   ]
+  },
+  {
+   "text": "faça um resumo das mudanças e abra o PR",
+   "top": [
+    [
+     "__label__pt",
+     0.975959
+    ],
+    [
+     "__label__de",
+     0.014747
+    ],
+    [
+     "__label__en",
+     0.002912
+    ]
+   ]
+  },
+  {
+   "text": "tá bom, pode seguir com a opção dois",
+   "top": [
+    [
+     "__label__pt",
+     0.993162
+    ],
+    [
+     "__label__gl",
+     0.001745
+    ],
+    [
+     "__label__ca",
+     0.001275
+    ]
+   ]
+  },
+  {
+   "text": "valida o PR da feature para master",
+   "top": [
+    [
+     "__label__pt",
+     0.891966
+    ],
+    [
+     "__label__gl",
+     0.092143
+    ],
+    [
+     "__label__es",
+     0.012163
+    ]
+   ]
+  },
+  {
+   "text": "o que significa esse erro de permissão no kubectl",
+   "top": [
+    [
+     "__label__pt",
+     0.977382
+    ],
+    [
+     "__label__ia",
+     0.00498
+    ],
+    [
+     "__label__vi",
+     0.004052
+    ]
+   ]
+  },
+  {
+   "text": "roda os testes e me avisa se algum falhar",
+   "top": [
+    [
+     "__label__pt",
+     0.980617
+    ],
+    [
+     "__label__en",
+     0.006514
+    ],
+    [
+     "__label__gl",
+     0.003214
+    ]
+   ]
+  },
+  {
+   "text": "precisamos migrar essa dag do airflow para o novo cluster",
+   "top": [
+    [
+     "__label__pt",
+     0.598367
+    ],
+    [
+     "__label__gl",
+     0.08509
+    ],
+    [
+     "__label__no",
+     0.045008
+    ]
+   ]
+  },
+  {
+   "text": "essa query está muito lenta, consegue otimizar",
+   "top": [
+    [
+     "__label__pt",
+     0.980104
+    ],
+    [
+     "__label__es",
+     0.005348
+    ],
+    [
+     "__label__gl",
+     0.005308
+    ]
+   ]
+  },
+  {
+   "text": "obrigada, agora ficou perfeito",
+   "top": [
+    [
+     "__label__pt",
+     0.946227
+    ],
+    [
+     "__label__en",
+     0.025865
+    ],
+    [
+     "__label__gl",
+     0.011542
+    ]
+   ]
+  },
+  {
+   "text": "a reunião de ontem foi gravada e eu preciso da transcrição completa",
+   "top": [
+    [
+     "__label__pt",
+     0.992007
+    ],
+    [
+     "__label__en",
+     0.002528
+    ],
+    [
+     "__label__gl",
+     0.001163
+    ]
+   ]
+  },
+  {
+   "text": "esse gráfico está cortado no canto direito, ajusta pra mim",
+   "top": [
+    [
+     "__label__pt",
+     0.919672
+    ],
+    [
+     "__label__es",
+     0.043312
+    ],
+    [
+     "__label__gl",
+     0.022048
+    ]
+   ]
+  },
+  {
+   "text": "liga o monitor lateral em modo paisagem e testa de novo",
+   "top": [
+    [
+     "__label__pt",
+     0.981066
+    ],
+    [
+     "__label__gl",
+     0.006363
+    ],
+    [
+     "__label__es",
+     0.001554
+    ]
+   ]
+  },
+  {
+   "text": "dessa vez deixa o serviço rodando o tempo todo",
+   "top": [
+    [
+     "__label__pt",
+     0.931
+    ],
+    [
+     "__label__gl",
+     0.027889
+    ],
+    [
+     "__label__es",
+     0.01414
+    ]
+   ]
+  },
+  {
+   "text": "a gente precisa decidir entre o cron e o systemd timer",
+   "top": [
+    [
+     "__label__pt",
+     0.568779
+    ],
+    [
+     "__label__es",
+     0.124105
+    ],
+    [
+     "__label__en",
+     0.060642
+    ]
+   ]
+  },
+  {
+   "text": "sobe o container e confere se a porta está aberta",
+   "top": [
+    [
+     "__label__pt",
+     0.734784
+    ],
+    [
+     "__label__es",
+     0.204217
+    ],
+    [
+     "__label__gl",
+     0.052368
+    ]
+   ]
+  },
+  {
+   "text": "revisa o diff antes de abrir o pull request",
+   "top": [
+    [
+     "__label__en",
+     0.828936
+    ],
+    [
+     "__label__pt",
+     0.135198
+    ],
+    [
+     "__label__vi",
+     0.009348
+    ]
+   ]
+  },
+  {
+   "text": "por que o hook não dispara quando eu colo um texto grande",
+   "top": [
+    [
+     "__label__pt",
+     0.999712
+    ],
+    [
+     "__label__en",
+     0.000108
+    ],
+    [
+     "__label__es",
+     8.4e-05
+    ]
+   ]
+  },
+  {
+   "text": "junta os dois commits num só e manda pro remoto",
+   "top": [
+    [
+     "__label__pt",
+     0.824804
+    ],
+    [
+     "__label__en",
+     0.051865
+    ],
+    [
+     "__label__gl",
+     0.029902
+    ]
+   ]
+  },
+  {
+   "text": "escreve um teste que cubre o caso do arquivo vazio",
+   "top": [
+    [
+     "__label__pt",
+     0.487827
+    ],
+    [
+     "__label__es",
+     0.296717
+    ],
+    [
+     "__label__gl",
+     0.128747
+    ]
+   ]
+  },
+  {
+   "text": "não, eu falei da outra tabela, a de pedidos",
+   "top": [
+    [
+     "__label__pt",
+     0.990578
+    ],
+    [
+     "__label__gl",
+     0.003451
+    ],
+    [
+     "__label__en",
+     0.003213
+    ]
+   ]
+  },
+  {
+   "text": "quanto tempo leva esse job quando roda em produção",
+   "top": [
+    [
+     "__label__pt",
+     0.994868
+    ],
+    [
+     "__label__it",
+     0.003049
+    ],
+    [
+     "__label__tr",
+     0.000463
+    ]
+   ]
+  },
+  {
+   "text": "roda o dbt build nos modelos de staging",
+   "top": [
+    [
+     "__label__pt",
+     0.363241
+    ],
+    [
+     "__label__en",
+     0.121153
+    ],
+    [
+     "__label__es",
+     0.107413
+    ]
+   ]
+  },
+  {
+   "text": "olha o arquivo ~/projeto/src/main.py e me diz o que muda",
+   "top": [
+    [
+     "__label__pt",
+     0.895704
+    ],
+    [
+     "__label__es",
+     0.019457
+    ],
+    [
+     "__label__gl",
+     0.017637
+    ]
+   ]
+  },
+  {
+   "text": "faz um git rebase na branch feature/login e resolve os conflitos",
+   "top": [
+    [
+     "__label__pt",
+     0.734066
+    ],
+    [
+     "__label__br",
+     0.049594
+    ],
+    [
+     "__label__uz",
+     0.032508
+    ]
+   ]
+  },
+  {
+   "text": "o snowflake está dando erro no `COPY INTO` quando o arquivo é grande",
+   "top": [
+    [
+     "__label__pt",
+     0.983215
+    ],
+    [
+     "__label__gl",
+     0.014647
+    ],
+    [
+     "__label__it",
+     0.000638
+    ]
+   ]
+  },
+  {
+   "text": "please refactor the parser and run the tests again",
+   "top": [
+    [
+     "__label__en",
+     0.88647
+    ],
+    [
+     "__label__ru",
+     0.018259
+    ],
+    [
+     "__label__ja",
+     0.01095
+    ]
+   ]
+  },
+  {
+   "text": "run the dbt models for the staging layer",
+   "top": [
+    [
+     "__label__en",
+     0.71349
+    ],
+    [
+     "__label__it",
+     0.049253
+    ],
+    [
+     "__label__pt",
+     0.048962
+    ]
+   ]
+  },
+  {
+   "text": "can you look at this error in the airflow log",
+   "top": [
+    [
+     "__label__en",
+     0.941871
+    ],
+    [
+     "__label__te",
+     0.003891
+    ],
+    [
+     "__label__it",
+     0.003472
+    ]
+   ]
+  },
+  {
+   "text": "create a new branch and open a pull request",
+   "top": [
+    [
+     "__label__en",
+     0.7449
+    ],
+    [
+     "__label__fa",
+     0.017368
+    ],
+    [
+     "__label__ml",
+     0.011566
+    ]
+   ]
+  },
+  {
+   "text": "I think we should use a different approach here",
+   "top": [
+    [
+     "__label__en",
+     0.968509
+    ],
+    [
+     "__label__hi",
+     0.002423
+    ],
+    [
+     "__label__kn",
+     0.002349
+    ]
+   ]
+  },
+  {
+   "text": "why is the test failing after the last change",
+   "top": [
+    [
+     "__label__en",
+     0.967285
+    ],
+    [
+     "__label__ru",
+     0.002415
+    ],
+    [
+     "__label__th",
+     0.002077
+    ]
+   ]
+  },
+  {
+   "text": "show me the diff between the two branches",
+   "top": [
+    [
+     "__label__en",
+     0.999129
+    ],
+    [
+     "__label__vi",
+     7.1e-05
+    ],
+    [
+     "__label__tr",
+     6.7e-05
+    ]
+   ]
+  },
+  {
+   "text": "update the readme and add a section about installation",
+   "top": [
+    [
+     "__label__en",
+     0.712015
+    ],
+    [
+     "__label__ru",
+     0.026975
+    ],
+    [
+     "__label__de",
+     0.019468
+    ]
+   ]
+  },
+  {
+   "text": "what does this function do and who calls it",
+   "top": [
+    [
+     "__label__en",
+     0.8659
+    ],
+    [
+     "__label__te",
+     0.011479
+    ],
+    [
+     "__label__ru",
+     0.007404
+    ]
+   ]
+  },
+  {
+   "text": "fix the failing lint check in the ci pipeline",
+   "top": [
+    [
+     "__label__en",
+     0.840005
+    ],
+    [
+     "__label__it",
+     0.064096
+    ],
+    [
+     "__label__de",
+     0.009441
+    ]
+   ]
+  },
+  {
+   "text": "add a retry with exponential backoff to the client",
+   "top": [
+    [
+     "__label__en",
+     0.767414
+    ],
+    [
+     "__label__ru",
+     0.050097
+    ],
+    [
+     "__label__th",
+     0.010547
+    ]
+   ]
+  },
+  {
+   "text": "explain how the scheduler decides which task runs next",
+   "top": [
+    [
+     "__label__en",
+     0.887004
+    ],
+    [
+     "__label__kn",
+     0.010587
+    ],
+    [
+     "__label__bn",
+     0.009416
+    ]
+   ]
+  },
+  {
+   "text": "rename the variable and update all the usages",
+   "top": [
+    [
+     "__label__en",
+     0.781778
+    ],
+    [
+     "__label__de",
+     0.022481
+    ],
+    [
+     "__label__fa",
+     0.010617
+    ]
+   ]
+  },
+  {
+   "text": "check if the terraform plan is clean before merging",
+   "top": [
+    [
+     "__label__en",
+     0.938755
+    ],
+    [
+     "__label__nl",
+     0.004837
+    ],
+    [
+     "__label__es",
+     0.004426
+    ]
+   ]
+  },
+  {
+   "text": "this did not work, try again with a different parameter",
+   "top": [
+    [
+     "__label__en",
+     0.76825
+    ],
+    [
+     "__label__te",
+     0.021289
+    ],
+    [
+     "__label__pt",
+     0.015463
+    ]
+   ]
+  },
+  {
+   "text": "we need to migrate this dag to the new cluster",
+   "top": [
+    [
+     "__label__en",
+     0.630692
+    ],
+    [
+     "__label__no",
+     0.056295
+    ],
+    [
+     "__label__ka",
+     0.019561
+    ]
+   ]
+  },
+  {
+   "text": "the query is too slow, can you optimize it",
+   "top": [
+    [
+     "__label__en",
+     0.936639
+    ],
+    [
+     "__label__de",
+     0.004221
+    ],
+    [
+     "__label__te",
+     0.003511
+    ]
+   ]
+  },
+  {
+   "text": "thanks, that looks perfect now",
+   "top": [
+    [
+     "__label__en",
+     0.991638
+    ],
+    [
+     "__label__vi",
+     0.000497
+    ],
+    [
+     "__label__it",
+     0.000489
+    ]
+   ]
+  },
+  {
+   "text": "open the config file and tell me what the timeout is",
+   "top": [
+    [
+     "__label__en",
+     0.962513
+    ],
+    [
+     "__label__ru",
+     0.003644
+    ],
+    [
+     "__label__th",
+     0.003492
+    ]
+   ]
+  },
+  {
+   "text": "run the build and let me know if anything fails",
+   "top": [
+    [
+     "__label__en",
+     0.948467
+    ],
+    [
+     "__label__de",
+     0.004323
+    ],
+    [
+     "__label__ru",
+     0.003462
+    ]
+   ]
+  },
+  {
+   "text": "write a script that renames all the files in this folder",
+   "top": [
+    [
+     "__label__en",
+     0.840781
+    ],
+    [
+     "__label__th",
+     0.00946
+    ],
+    [
+     "__label__bn",
+     0.009166
+    ]
+   ]
+  },
+  {
+   "text": "summarize the changes and open the pr",
+   "top": [
+    [
+     "__label__en",
+     0.74827
+    ],
+    [
+     "__label__ru",
+     0.016897
+    ],
+    [
+     "__label__de",
+     0.011688
+    ]
+   ]
+  },
+  {
+   "text": "keep going with option two",
+   "top": [
+    [
+     "__label__en",
+     0.978965
+    ],
+    [
+     "__label__de",
+     0.002569
+    ],
+    [
+     "__label__ru",
+     0.002249
+    ]
+   ]
+  },
+  {
+   "text": "what is the difference between a view and a table in snowflake",
+   "top": [
+    [
+     "__label__en",
+     0.976278
+    ],
+    [
+     "__label__te",
+     0.001505
+    ],
+    [
+     "__label__ru",
+     0.001432
+    ]
+   ]
+  },
+  {
+   "text": "delete the old branches that are already merged",
+   "top": [
+    [
+     "__label__en",
+     0.999151
+    ],
+    [
+     "__label__de",
+     0.000127
+    ],
+    [
+     "__label__te",
+     6.4e-05
+    ]
+   ]
+  },
+  {
+   "text": "the pipeline broke after the last deploy",
+   "top": [
+    [
+     "__label__en",
+     0.980497
+    ],
+    [
+     "__label__de",
+     0.002798
+    ],
+    [
+     "__label__ru",
+     0.001727
+    ]
+   ]
+  },
+  {
+   "text": "look at the logs from yesterday and find the root cause",
+   "top": [
+    [
+     "__label__en",
+     0.9662
+    ],
+    [
+     "__label__ru",
+     0.002037
+    ],
+    [
+     "__label__te",
+     0.00155
+    ]
+   ]
+  },
+  {
+   "text": "make the loading state visible while the request is running",
+   "top": [
+    [
+     "__label__en",
+     0.889423
+    ],
+    [
+     "__label__nl",
+     0.008248
+    ],
+    [
+     "__label__id",
+     0.007969
+    ]
+   ]
+  },
+  {
+   "text": "is there a way to cache this call so we do not repeat it",
+   "top": [
+    [
+     "__label__en",
+     0.985704
+    ],
+    [
+     "__label__bn",
+     0.001425
+    ],
+    [
+     "__label__th",
+     0.000795
+    ]
+   ]
+  },
+  {
+   "text": "the meeting yesterday was recorded and I need the full transcript",
+   "top": [
+    [
+     "__label__en",
+     0.986936
+    ],
+    [
+     "__label__de",
+     0.001574
+    ],
+    [
+     "__label__th",
+     0.001406
+    ]
+   ]
+  },
+  {
+   "text": "this chart is cut off on the right edge, please adjust it",
+   "top": [
+    [
+     "__label__en",
+     0.924885
+    ],
+    [
+     "__label__de",
+     0.007013
+    ],
+    [
+     "__label__id",
+     0.003614
+    ]
+   ]
+  },
+  {
+   "text": "turn the side monitor to landscape and test again",
+   "top": [
+    [
+     "__label__en",
+     0.789274
+    ],
+    [
+     "__label__ru",
+     0.022537
+    ],
+    [
+     "__label__ja",
+     0.013735
+    ]
+   ]
+  },
+  {
+   "text": "this time leave the service running all the time",
+   "top": [
+    [
+     "__label__en",
+     0.841262
+    ],
+    [
+     "__label__nl",
+     0.010117
+    ],
+    [
+     "__label__de",
+     0.008403
+    ]
+   ]
+  },
+  {
+   "text": "we have to decide between cron and a systemd timer",
+   "top": [
+    [
+     "__label__en",
+     0.969008
+    ],
+    [
+     "__label__de",
+     0.002355
+    ],
+    [
+     "__label__km",
+     0.001942
+    ]
+   ]
+  },
+  {
+   "text": "start the container and verify that the port is open",
+   "top": [
+    [
+     "__label__en",
+     0.966279
+    ],
+    [
+     "__label__de",
+     0.002788
+    ],
+    [
+     "__label__nl",
+     0.002478
+    ]
+   ]
+  },
+  {
+   "text": "review the diff before opening the pull request",
+   "top": [
+    [
+     "__label__en",
+     0.978849
+    ],
+    [
+     "__label__vi",
+     0.00214
+    ],
+    [
+     "__label__pt",
+     0.001713
+    ]
+   ]
+  },
+  {
+   "text": "why does the hook not fire when I paste a large text",
+   "top": [
+    [
+     "__label__en",
+     0.970158
+    ],
+    [
+     "__label__fr",
+     0.002122
+    ],
+    [
+     "__label__de",
+     0.00196
+    ]
+   ]
+  },
+  {
+   "text": "squash the two commits into one and push to the remote",
+   "top": [
+    [
+     "__label__en",
+     0.970306
+    ],
+    [
+     "__label__ru",
+     0.003913
+    ],
+    [
+     "__label__de",
+     0.002325
+    ]
+   ]
+  },
+  {
+   "text": "write a test that covers the empty file case",
+   "top": [
+    [
+     "__label__en",
+     0.844409
+    ],
+    [
+     "__label__ru",
+     0.009909
+    ],
+    [
+     "__label__bn",
+     0.006842
+    ]
+   ]
+  },
+  {
+   "text": "no, I meant the other table, the orders one",
+   "top": [
+    [
+     "__label__en",
+     0.898173
+    ],
+    [
+     "__label__vi",
+     0.004904
+    ],
+    [
+     "__label__ru",
+     0.004104
+    ]
+   ]
+  },
+  {
+   "text": "how long does this job take when it runs in production",
+   "top": [
+    [
+     "__label__en",
+     0.885987
+    ],
+    [
+     "__label__fr",
+     0.034605
+    ],
+    [
+     "__label__de",
+     0.010136
+    ]
+   ]
+  },
+  {
+   "text": "run dbt build on the staging models and check the logs",
+   "top": [
+    [
+     "__label__en",
+     0.936867
+    ],
+    [
+     "__label__pt",
+     0.009055
+    ],
+    [
+     "__label__de",
+     0.006529
+    ]
+   ]
+  },
+  {
+   "text": "look at ~/project/src/main.py and tell me what changes",
+   "top": [
+    [
+     "__label__en",
+     0.851491
+    ],
+    [
+     "__label__ru",
+     0.007361
+    ],
+    [
+     "__label__te",
+     0.006178
+    ]
+   ]
+  },
+  {
+   "text": "the Snowflake COPY INTO fails when the file is large",
+   "top": [
+    [
+     "__label__en",
+     0.988189
+    ],
+    [
+     "__label__pt",
+     0.001341
+    ],
+    [
+     "__label__es",
+     0.00078
+    ]
+   ]
+  },
+  {
+   "text": "do a git rebase on feature/login and resolve the conflicts",
+   "top": [
+    [
+     "__label__en",
+     0.683301
+    ],
+    [
+     "__label__de",
+     0.02896
+    ],
+    [
+     "__label__tr",
+     0.023993
+    ]
+   ]
+  },
+  {
+   "text": "me gustaría que lo hicieras ahora mismo por favor",
+   "top": [
+    [
+     "__label__es",
+     0.989927
+    ],
+    [
+     "__label__pt",
+     0.005554
+    ],
+    [
+     "__label__ast",
+     0.000952
+    ]
+   ]
+  },
+  {
+   "text": "je pense que tu devrais le faire maintenant",
+   "top": [
+    [
+     "__label__fr",
+     0.957326
+    ],
+    [
+     "__label__eo",
+     0.005571
+    ],
+    [
+     "__label__sh",
+     0.00486
+    ]
+   ]
+  },
+  {
+   "text": "ich glaube du solltest das jetzt machen",
+   "top": [
+    [
+     "__label__de",
+     0.998622
+    ],
+    [
+     "__label__als",
+     0.000474
+    ],
+    [
+     "__label__en",
+     0.000127
+    ]
+   ]
+  },
+  {
+   "text": "penso che dovresti farlo adesso",
+   "top": [
+    [
+     "__label__it",
+     0.997051
+    ],
+    [
+     "__label__vec",
+     0.000597
+    ],
+    [
+     "__label__hu",
+     0.000466
+    ]
+   ]
+  },
+  {
+   "text": "я думаю что тебе нужно сделать это сейчас",
+   "top": [
+    [
+     "__label__ru",
+     0.999137
+    ],
+    [
+     "__label__uk",
+     0.000218
+    ],
+    [
+     "__label__hy",
+     0.000198
+    ]
+   ]
+  },
+  {
+   "text": "今すぐそれをやるべきだと思います",
+   "top": [
+    [
+     "__label__ja",
+     0.990482
+    ],
+    [
+     "__label__en",
+     0.005223
+    ],
+    [
+     "__label__ko",
+     0.002621
+    ]
+   ]
+  },
+  {
+   "text": "ação configuração coração português",
+   "top": [
+    [
+     "__label__pt",
+     0.998758
+    ],
+    [
+     "__label__en",
+     0.001199
+    ],
+    [
+     "__label__it",
+     4.5e-05
+    ]
+   ]
+  },
+  {
+   "text": "naïve café résumé",
+   "top": [
+    [
+     "__label__fr",
+     0.980708
+    ],
+    [
+     "__label__en",
+     0.005915
+    ],
+    [
+     "__label__pl",
+     0.001551
+    ]
+   ]
+  }
+ ]
+}
