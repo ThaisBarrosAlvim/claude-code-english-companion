@@ -6,7 +6,19 @@ import { detect, warmUp } from './client'
 import type { Target } from './languages'
 import { hasEnoughText, isOtherLanguage, parseTarget } from './languages'
 import type { ReviewSettings } from './review'
-import { changedPieces, cleanSettings, clip, fitPairs, highlights, reviewDraft, shouldReview } from './review'
+import {
+  KEYS,
+  NAME,
+  cells,
+  changedPieces,
+  cleanSettings,
+  clip,
+  highlights,
+  layoutTip,
+  layoutWarning,
+  reviewDraft,
+  shouldReview,
+} from './review'
 
 // english-companion helps you write in the language you chose (English by default), in two
 // moments. Both are drawn on the hint row under the prompt (the engine's status line would add
@@ -24,11 +36,15 @@ import { changedPieces, cleanSettings, clip, fitPairs, highlights, reviewDraft, 
 //                   above the prompt and `2` dismisses the tip; typing anything else also
 //                   dismisses it.
 //
+// Either row stays one row: on a narrow terminal the pairs get shorter and then go, then the name
+// goes, and the count and the keys stay.
+//
 // Nothing here blocks, rewrites or delays what you type or send. The state is per session, so
 // with several chats open each one shows the state of its own draft.
 
-const KEYS = '1: details · 2: dismiss'
-const WORD = 18 // longest piece of a change shown on the row; longer ones are cut
+// The row is shared: the engine keeps the permission mode at its left (`⏵⏵ auto mode on · `).
+const FOOTER_LABEL = 22
+const WIDE = 120 // the width assumed when the surface has not measured one
 
 // Change the tag when the shape of a review changes: it declines what an earlier version stored,
 // which outlives a reload.
@@ -151,50 +167,60 @@ export const register: Register = (on, options) => {
     const other = await read($, otherLanguage)
     if (!tip && other === '') return next(e)
 
-    const { Box, Text } = $.ui.resolve(e)
+    const { Text } = $.ui.resolve(e)
 
-    // Fixes come first; with none, the improvements take the row. What does not fit is counted.
-    const isFix = (tip?.fixes.length ?? 0) > 0
-    const list = tip ? (isFix ? tip.fixes : tip.improvements) : []
-    const { shown, more } = fitPairs(list)
-    const extra = isFix ? (tip?.improvements.length ?? 0) : 0
-    const label = isFix ? (list.length === 1 ? 'fix' : 'fixes') : list.length === 1 ? 'improvement' : 'improvements'
-
-    return (
-      <Box>
-        <Text>🎓 </Text>
-        <Text color="blue" weight="bold">
-          english-companion
+    // One Text, so a row too long for the terminal is cut at its end instead of wrapping; the
+    // layout keeps it from getting there by dropping the least useful parts first.
+    const room = (e.viewport?.columns ?? WIDE) - FOOTER_LABEL
+    const name = (isNamed: boolean) =>
+      isNamed ? (
+        <Text>
+          {'🎓 '}
+          <Text color="blue" weight="bold">
+            {NAME}
+          </Text>
+          {'  '}
         </Text>
-        <Text>{'  '}</Text>
-        {tip ? (
-          <Box>
-            <Text weight="bold" color="white">{`${isFix ? '📝' : '✨'} ${list.length} ${label}: `}</Text>
-            {shown.map((change, i) => (
-              <Box key={change.from}>
-                {i > 0 && <Text dimColor>{' · '}</Text>}
-                <Text color={isFix ? 'red' : undefined}>{clip(change.from, WORD)}</Text>
-                <Text>{' → '}</Text>
-                <Text color={isFix ? 'green' : 'magenta'}>
-                  {change.to.length <= WORD
-                    ? changedPieces(change.from, change.to).map(piece => (piece.underline ? <Text underline>{piece.text}</Text> : piece.text))
-                    : clip(change.to, WORD)}
-                </Text>
-              </Box>
-            ))}
-            {more > 0 && <Text dimColor>{` +${more}`}</Text>}
-            {extra > 0 && <Text color="magenta">{`  ✨ +${extra}`}</Text>}
-            <Text dimColor>{`   ${KEYS}`}</Text>
-          </Box>
-        ) : (
-          <Box>
-            <Text backgroundColor="yellow" color="black" weight="bold">
-              {` 🌐 ${other.toUpperCase()} → ${target.code.toUpperCase()} `}
+      ) : (
+        <Text>{'🎓 '}</Text>
+      )
+
+    if (!tip) {
+      const row = layoutWarning(other, target, room)
+      return (
+        <Text wrap="truncate-end">
+          {name(row.isNamed)}
+          <Text backgroundColor="yellow" color="black" weight="bold">
+            {row.badge}
+          </Text>
+          <Text color="yellow">{row.note}</Text>
+        </Text>
+      )
+    }
+
+    const row = layoutTip(tip, room)
+    return (
+      <Text wrap="truncate-end">
+        {name(row.isNamed)}
+        <Text weight="bold" color="white">
+          {row.shown.length > 0 ? `${row.head}: ` : row.head}
+        </Text>
+        {row.shown.map((change, i) => (
+          <Text key={`${i}:${change.from}`}>
+            {i > 0 && <Text dimColor>{' · '}</Text>}
+            <Text color={row.isFix ? 'red' : undefined}>{clip(change.from, row.piece)}</Text>
+            {' → '}
+            <Text color={row.isFix ? 'green' : 'magenta'}>
+              {cells(change.to) <= row.piece
+                ? changedPieces(change.from, change.to).map(piece => (piece.underline ? <Text underline>{piece.text}</Text> : piece.text))
+                : clip(change.to, row.piece)}
             </Text>
-            <Text color="yellow">{` write in ${target.name}`}</Text>
-          </Box>
-        )}
-      </Box>
+          </Text>
+        ))}
+        {row.more > 0 && <Text dimColor>{` +${row.more}`}</Text>}
+        {row.extra > 0 && <Text color="magenta">{`  ✨ +${row.extra}`}</Text>}
+        <Text dimColor>{`   ${KEYS}`}</Text>
+      </Text>
     )
   })
 
@@ -230,18 +256,20 @@ export const register: Register = (on, options) => {
                       {changedPieces(change.from, change.to).map(piece => (piece.underline ? <Text underline>{piece.text}</Text> : piece.text))}
                     </Text>
                   </Box>
-                  <Text dimColor>
-                    {'   '}
-                    {highlights(change.why).map(piece =>
-                      piece.color || piece.underline || piece.strike ? (
-                        <Text color={piece.color} underline={piece.underline} strikethrough={piece.strike} dimColor={false} weight="bold">
-                          {piece.text}
-                        </Text>
-                      ) : (
-                        piece.text
-                      ),
-                    )}
-                  </Text>
+                  {/* Indented as a box, so a reason that wraps keeps its indent on every row. */}
+                  <Box paddingLeft={3}>
+                    <Text dimColor>
+                      {highlights(change.why).map(piece =>
+                        piece.color || piece.underline || piece.strike ? (
+                          <Text color={piece.color} underline={piece.underline} strikethrough={piece.strike} dimColor={false} weight="bold">
+                            {piece.text}
+                          </Text>
+                        ) : (
+                          piece.text
+                        ),
+                      )}
+                    </Text>
+                  </Box>
                 </Box>
               ))}
             </Box>

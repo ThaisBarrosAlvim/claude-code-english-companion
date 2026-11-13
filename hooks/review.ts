@@ -87,14 +87,14 @@ function languageNote(language: string, target: string): string {
   const mistakes = `words that look like a word of that language but mean something else (false friends), word-for-word translations, wrong prepositions, missing articles`
 
   if (!language) {
-    return `The writer is not a native ${target} speaker. Their mistakes often come from their first language: ${mistakes}. When a word does not exist in ${target} or does not fit, work out from the kind of mistake which language it comes from and what the writer most likely meant in context, and suggest the ${target} word for that meaning. Mention the false friend in "why" when it helps, saying that the writer's word looks like the other word, never as if the writer had written that word.`
+    return `The writer is not a native ${target} speaker. Their mistakes often come from their first language: ${mistakes}. When a word does not exist in ${target} or does not fit, work out from the kind of mistake which language it comes from and what the writer most likely meant in context, and suggest the ${target} word for that meaning. Mention the false friend in "why" when it helps: say that the word looks like the other language's word and what each one means, never as if the writer had written that word.`
   }
 
   const example =
     /^portuguese/i.test(language) && /^english/i.test(target)
       ? ' For example, a Portuguese speaker who types "destact" most likely meant "destacar", so the English word is "highlight", not "distract".'
       : ''
-  return `The writer's first language is ${language}. Their mistakes often come from it: ${mistakes}. When a word does not exist in ${target} or does not fit, think about which ${language} word it resembles and what the writer most likely meant in context, and suggest the ${target} word for that meaning.${example} Mention the false friend in "why" when it helps, and when you name the ${language} word, say that the writer's word looks like it or comes from it (for example: Looks like the ${language} word ...), never as if the writer had written that word.`
+  return `The writer's first language is ${language}. Their mistakes often come from it: ${mistakes}. When a word does not exist in ${target} or does not fit, think about which ${language} word it resembles and what the writer most likely meant in context, and suggest the ${target} word for that meaning.${example} Mention the false friend in "why" when it helps: say that the word looks like the ${language} word and what each one means (for example: "X" looks like the ${language} "Y", which means ...; in ${target}, "X" means ...), never as if the writer had written the ${language} word.`
 }
 
 // How strict to be, as the person set it. Normal needs no extra words.
@@ -135,7 +135,7 @@ ${languageNote(language, target)}${sensitivityNote(sensitivity) ? `\n\n${sensiti
 Reply with one JSON object and nothing else:
 {"fixes":[{"from":"...","to":"...","why":"..."}],"improvements":[{"from":"...","to":"...","why":"..."}]}
 
-- fixes: at most ${limits.fixes} clear mistakes (spelling, grammar, a wrong word). "from" is a short piece copied exactly from the draft, "to" is that piece corrected, "why" is one plain sentence a learner understands.
+- fixes: at most ${limits.fixes} clear mistakes (spelling, grammar, a wrong word). "from" is the shortest piece copied exactly from the draft that shows the mistake, usually one to three words, "to" is that piece corrected, "why" is one or two plain sentences a learner understands, written to the writer as "you". Your own "why" must be correct, since it teaches.
 ${improvements}
 - Pick what matters most; never list everything. If the draft is correct and natural, reply {"fixes":[],"improvements":[]}.
 
@@ -336,25 +336,115 @@ export function changedPieces(from: string, to: string): Piece[] {
 
 // ── Fitting the one-line tip ────────────────────────────────────────────────────────────────
 
-// The text cut to `max` characters, with an ellipsis where it was cut, so a long piece of a
-// draft cannot push the keys of the tip off the row.
-export function clip(text: string, max: number): string {
-  return text.length > max ? `${text.slice(0, max - 1)}…` : text
+export const NAME = 'english-companion'
+export const KEYS = '1: details · 2: dismiss'
+export const PIECE = 18 // longest piece of a change shown on the row; longer ones are cut
+const MIN_PIECE = 8 // a piece cut shorter than this says too little to be worth the row
+
+// Emoji and the wide scripts take two cells of the terminal; marks and joiners take none.
+const WIDE = /\p{Extended_Pictographic}|[ᄀ-ᅟ⺀-꓏가-힣豈-﫿︰-﹏＀-｠￠-￦]/u
+const ZERO = /\p{M}|‍/u
+
+// How many terminal cells the text takes.
+export function cells(text: string): number {
+  let count = 0
+  for (const char of text) count += ZERO.test(char) ? 0 : WIDE.test(char) ? 2 : 1
+  return count
 }
 
-// How many of the changes fit on the one-line tip: as many as keep the pairs within `budget`
-// characters (the first always shows), and how many were left out.
-export function fitPairs(list: readonly Change[], budget = 40, piece = 18): { shown: Change[]; more: number } {
-  const shown: Change[] = []
-  let used = 0
+// The text cut to `max` cells, with an ellipsis where it was cut, so a long piece of a draft
+// cannot push the keys of the tip off the row.
+export function clip(text: string, max: number): string {
+  if (cells(text) <= max) return text
+  let kept = ''
+  for (const char of text) {
+    if (cells(kept + char) > max - 1) break
+    kept += char
+  }
+  return `${kept}…`
+}
 
-  for (const change of list) {
-    const size = clip(change.from, piece).length + 3 + clip(change.to, piece).length + (shown.length > 0 ? 3 : 0)
-    if (shown.length > 0 && used + size > budget) break
+// The part of a change that differs: the words both sides share at the start and at the end are
+// left out, so `I pretend to write → I plan to write` is `pretend → plan` on the row. When one
+// side would be left empty, as when a word is only added or removed, one shared word stays.
+export function trimPair(change: Change): Change {
+  const from = change.from.trim().split(/\s+/)
+  const to = change.to.trim().split(/\s+/)
+  let start = 0
+  while (start < from.length && start < to.length && from[start] === to[start]) start++
+  let end = 0
+  while (end < from.length - start && end < to.length - start && from[from.length - 1 - end] === to[to.length - 1 - end]) end++
+
+  if (start === from.length - end || start === to.length - end) {
+    if (start > 0) start--
+    else if (end > 0) end--
+  }
+  if (start === 0 && end === 0) return change
+  return { ...change, from: from.slice(start, from.length - end).join(' '), to: to.slice(start, to.length - end).join(' ') }
+}
+
+// Which changes fit in `room` cells, written as `: a → b · c → d +1`, and how many cells each
+// piece may take. The first change has its pieces cut down to MIN_PIECE before it is left out;
+// when even that does not fit, none shows and the row keeps only the count, so `more` is 0.
+export function fitPairs(list: readonly Change[], room: number, piece = PIECE): { shown: Change[]; more: number; piece: number } {
+  const first = list[0]
+  if (!first) return { shown: [], more: 0, piece }
+
+  const pair = (change: Change, max: number) => cells(clip(change.from, max)) + 3 + cells(clip(change.to, max))
+  const plus = (left: number) => (left > 0 ? 3 : 0) // ` +N`, while fewer than ten are left out
+
+  let max = piece
+  while (max > MIN_PIECE && 2 + pair(first, max) + plus(list.length - 1) > room) max--
+  if (2 + pair(first, max) + plus(list.length - 1) > room) return { shown: [], more: 0, piece: max }
+
+  const shown = [first]
+  let used = 2 + pair(first, max)
+  for (const change of list.slice(1)) {
+    const size = 3 + pair(change, max)
+    if (used + size + plus(list.length - shown.length - 1) > room) break
     shown.push(change)
     used += size
   }
-  return { shown, more: list.length - shown.length }
+  return { shown, more: list.length - shown.length, piece: max }
+}
+
+export type TipRow = {
+  isFix: boolean
+  isNamed: boolean // room for the name after the 🎓
+  head: string // `📝 2 fixes`
+  extra: number // the improvements counted after the fixes, as `✨ +N`
+  shown: Change[]
+  more: number
+  piece: number
+}
+
+// The one-line tip laid out for `room` cells. Fixes come first; with none, the improvements take
+// the row, each pair cut to the part that differs (the details show it whole). When the row is
+// narrow, the pairs get shorter, then go, and then the name goes; the count and the keys stay.
+export function layoutTip(tip: Review, room: number): TipRow {
+  const isFix = tip.fixes.length > 0
+  const list = isFix ? tip.fixes : tip.improvements
+  const label = isFix ? (list.length === 1 ? 'fix' : 'fixes') : list.length === 1 ? 'improvement' : 'improvements'
+  const head = `${isFix ? '📝' : '✨'} ${list.length} ${label}`
+  const extra = isFix ? tip.improvements.length : 0
+  const tail = `${extra > 0 ? `  ✨ +${extra}` : ''}   ${KEYS}`
+
+  const isNamed = cells(`🎓 ${NAME}  ${head}${tail}`) <= room
+  const prefix = isNamed ? `🎓 ${NAME}  ` : '🎓 '
+  const { shown, more, piece } = fitPairs(list.map(trimPair), room - cells(prefix + head + tail))
+  return { isFix, isNamed, head, extra, shown, more, piece }
+}
+
+export type WarningRow = { isNamed: boolean; badge: string; note: string }
+
+// The language warning laid out for `room` cells: the name goes first, then the note; the badge
+// always stays.
+export function layoutWarning(other: string, target: { name: string; code: string }, room: number): WarningRow {
+  const badge = ` 🌐 ${other.toUpperCase()} → ${target.code.toUpperCase()} `
+  const note = ` write in ${target.name}`
+  const isNamed = cells(`🎓 ${NAME}  ${badge}${note}`) <= room
+  const prefix = isNamed ? `🎓 ${NAME}  ` : '🎓 '
+  return { isNamed, badge, note: cells(prefix + badge + note) <= room ? note : '' }
 }
 
 // ── The model call ──────────────────────────────────────────────────────────────────────────

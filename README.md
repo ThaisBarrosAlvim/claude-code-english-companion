@@ -3,14 +3,16 @@
 A [Claude Code](https://claude.com/claude-code) mod that helps you write your prompts in English, or in
 any language you are learning. It never blocks, rewrites or delays what you type or send.
 
-![The warning while a draft is in another language](docs/images/live-language-warning.png)
+![Typing a draft in another language shows a yellow warning, which goes away once the draft is in English](docs/images/language-warning.gif)
 
-*While you type: if your draft is in another language, a yellow warning shows under the prompt.*
+*While you type: a draft in another language gets a yellow warning under the prompt, and it goes away once
+you write in English.*
 
-![The details of a review: fixes and improvements, each with its reason](docs/images/english-review-details.png)
+![After sending, a tip shows one fix and one improvement; pressing 1 opens the details with the reason for each](docs/images/review-details.gif)
 
 *After you send: Haiku reviews your writing and leaves a short tip under the prompt, with 📝 for mistakes and
-✨ for more natural wording. Press `1` for the details shown here, or `2` to dismiss.*
+✨ for more natural wording. Press `1` for the details, here a false friend from the writer's first language
+and a shorter way to say the same thing, or `2` to dismiss.*
 
 ## Install
 

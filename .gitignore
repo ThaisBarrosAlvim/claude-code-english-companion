@@ -1,5 +1,6 @@
 # Written by the Claude Code engine when it loads the mod
 .claude-plugin/types/
+/tsconfig.json
 
 node_modules/
 __pycache__/

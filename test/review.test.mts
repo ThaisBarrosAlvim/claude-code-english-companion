@@ -10,10 +10,14 @@ import {
   cleanLanguage,
   cleanSensitivity,
   cleanSettings,
+  cells,
   clip,
   countWords,
   fitPairs,
   highlights,
+  layoutTip,
+  layoutWarning,
+  trimPair,
   parseReview,
   shouldReview,
 } from '../hooks/review.ts'
@@ -134,17 +138,91 @@ test('clip cuts long text with an ellipsis and leaves short text alone', () => {
   assert.equal(clip('', 5), '')
 })
 
-test('fitPairs shows as many changes as fit the row and counts the rest', () => {
+test('cells counts emoji and wide scripts as two terminal cells', () => {
+  assert.equal(cells('receive'), 7)
+  assert.equal(cells('🎓 x'), 4)
+  assert.equal(cells('✨'), 2)
+  assert.equal(cells('日本語'), 6)
+  assert.equal(cells('→ ·'), 3)
+  assert.equal(cells('é'), 1) // a letter and a combining mark: one cell
+  assert.equal(clip('日本語のテスト', 7), '日本語…') // cut by cells, not by characters
+})
+
+test('fitPairs shows as many changes as fit the room and counts the rest', () => {
   const short = [change('recieve', 'receive'), change('chek', 'check')]
-  assert.deepEqual(fitPairs(short), { shown: short, more: 0 })
+  assert.deepEqual(fitPairs(short, 40), { shown: short, more: 0, piece: 18 })
 
   const long = [change('I need make this', 'I need to make this'), change('another long piece', 'another long replacement')]
-  const fit = fitPairs(long)
+  const fit = fitPairs(long, 40)
   assert.equal(fit.shown.length, 1) // the second would push the keys off the row
   assert.equal(fit.more, 1)
 
-  assert.equal(fitPairs([change('x'.repeat(100), 'y'.repeat(100))]).shown.length, 1) // the first always shows
-  assert.deepEqual(fitPairs([]), { shown: [], more: 0 })
+  assert.deepEqual(fitPairs([], 40), { shown: [], more: 0, piece: 18 })
+})
+
+test('fitPairs cuts the pieces of the first change before leaving it out', () => {
+  const one = [change('x'.repeat(30), 'y'.repeat(30))]
+  const tight = fitPairs(one, 25)
+  assert.equal(tight.shown.length, 1)
+  assert.ok(2 + tight.piece * 2 + 3 <= 25)
+
+  assert.deepEqual(fitPairs(one, 12), { shown: [], more: 0, piece: 8 }) // too narrow even cut down
+})
+
+test('trimPair keeps only the words that differ, with one shared word when a side would be empty', () => {
+  const pair = (from: string, to: string) => {
+    const trimmed = trimPair(change(from, to))
+    return `${trimmed.from} → ${trimmed.to}`
+  }
+  assert.equal(pair('I pretend to write', 'I plan to write'), 'pretend → plan')
+  assert.equal(pair('Which cases I should cover?', 'Which cases should I cover?'), 'I should → should I')
+  assert.equal(pair('I need make this', 'I need to make this'), 'need → need to') // a word added
+  assert.equal(pair('You can really drop it', 'You can drop it'), 'can really → can') // a word removed
+  assert.equal(pair('make a list with all the cases', 'list all the cases'), 'make a list with → list')
+  assert.equal(pair('recieve', 'receive'), 'recieve → receive') // nothing shared: unchanged
+  assert.equal(trimPair(change('I pretend to write', 'I plan to write', 'the reason')).why, 'the reason')
+})
+
+test('layoutTip shows the trimmed pairs on the row', () => {
+  const tip = { fixes: [change('I pretend to write', 'I plan to write')], improvements: [] }
+  const row = layoutTip(tip, 98)
+  assert.deepEqual(row.shown.map(c => `${c.from} → ${c.to}`), ['pretend → plan'])
+})
+
+test('layoutTip keeps the count and the keys, dropping pairs and then the name', () => {
+  const tip = { fixes: [change('pretend', 'intend'), change('cases I should', 'cases should I')], improvements: [change('a', 'b')] }
+
+  const wide = layoutTip(tip, 160)
+  assert.equal(wide.isNamed, true)
+  assert.equal(wide.head, '📝 2 fixes')
+  assert.equal(wide.shown.length, 2)
+  assert.equal(wide.extra, 1)
+
+  const medium = layoutTip(tip, 90)
+  assert.equal(medium.isNamed, true)
+  assert.equal(medium.shown.length, 1)
+  assert.equal(medium.more, 1)
+
+  const narrow = layoutTip(tip, 70)
+  assert.equal(narrow.isNamed, true)
+  assert.equal(narrow.shown.length, 0) // only `📝 2 fixes  ✨ +1   1: details · 2: dismiss`
+
+  const tiny = layoutTip(tip, 40)
+  assert.equal(tiny.isNamed, false)
+  assert.equal(tiny.shown.length, 0)
+
+  const improvements = layoutTip({ fixes: [], improvements: [change('need make', 'need to make')] }, 160)
+  assert.equal(improvements.isFix, false)
+  assert.equal(improvements.head, '✨ 1 improvement')
+  assert.equal(improvements.extra, 0)
+})
+
+test('layoutWarning drops the name, then the note, and keeps the badge', () => {
+  const english = { name: 'English', code: 'en' }
+  assert.deepEqual(layoutWarning('pt', english, 80), { isNamed: true, badge: ' 🌐 PT → EN ', note: ' write in English' })
+  assert.equal(layoutWarning('pt', english, 40).isNamed, false)
+  assert.equal(layoutWarning('pt', english, 40).note, ' write in English')
+  assert.deepEqual(layoutWarning('pt', english, 20), { isNamed: false, badge: ' 🌐 PT → EN ', note: '' })
 })
 
 test('cleanLanguage keeps a language name and falls back to what it is given', () => {
@@ -379,8 +457,10 @@ test('buildSystem works without a first language, and asks the reviewer to work 
 })
 
 test('buildSystem asks the reviewer to say a word looks like the first language, not that it was written', () => {
-  assert.match(buildSystem(settings()), /Looks like the Portuguese word/)
-  assert.match(buildSystem(settings({ language: 'Spanish' })), /Looks like the Spanish word/)
+  assert.match(buildSystem(settings()), /looks like the Portuguese "Y", which means/)
+  assert.match(buildSystem(settings({ language: 'Spanish' })), /looks like the Spanish "Y", which means/)
+  assert.match(buildSystem(settings()), /never as if the writer had written the Portuguese word/)
+  assert.match(buildSystem(settings()), /written to the writer as "you"/)
 })
 
 test('highlights reads underline, strike and a color joined with a style', () => {
